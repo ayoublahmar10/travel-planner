@@ -302,13 +302,41 @@ function TripView({ trip, onBack, onUpdate }: { trip: Trip; onBack: () => void; 
 // ── App ───────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const { trips, addTrip, updateTrip, deleteTrip } = useTrips();
+  const { trips, loading, error, addTrip, updateTrip, deleteTrip } = useTrips();
   const [activeTrip, setActiveTrip] = useState<Trip | null>(null);
 
   const handleUpdate = useCallback((updated: Trip) => {
     updateTrip(updated);
     setActiveTrip(updated);
   }, [updateTrip]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center">
+        <div className="text-center space-y-3">
+          <div className="w-8 h-8 border-2 border-coral-300 border-t-coral-500 rounded-full animate-spin mx-auto" />
+          <p className="text-sm text-gray-400 font-body">Chargement…</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-cream flex items-center justify-center px-6">
+        <div className="text-center space-y-3 max-w-xs">
+          <p className="text-2xl">⚠️</p>
+          <p className="text-sm text-gray-600 font-body">{error}</p>
+          <button
+            onClick={() => window.location.reload()}
+            className="text-xs px-4 py-2 bg-coral-500 text-white rounded-lg font-medium"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (activeTrip) {
     const current = trips.find(t => t.id === activeTrip.id) ?? activeTrip;
