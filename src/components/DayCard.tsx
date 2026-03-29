@@ -5,7 +5,7 @@ import { Draggable, Droppable } from '@hello-pangea/dnd';
 import {
   Hotel as HotelIcon, Mountain, Zap, Leaf, UtensilsCrossed, Landmark, Waves, Sparkles, ShoppingBag,
   Plane, Ship, Car, Bike, Footprints,
-  Clock, Euro, MapPin, Plus, Trash2, GripVertical, CheckCircle2, Circle, Pencil, X, Check,
+  Clock, Euro, MapPin, Plus, Trash2, GripVertical, CheckCircle2, Circle, Pencil, X, Check, ChevronDown, ChevronUp,
   Coffee, Sun, Moon, Sandwich,
   type LucideIcon,
 } from 'lucide-react';
@@ -441,6 +441,7 @@ interface DayCardProps {
   dayNumber: number;
   destination?: Destination;
   isFirstOfDestination: boolean;
+  isToday?: boolean;
   onUpdateHotel:      (destId: string, h: Hotel)      => void;
   onAddActivity:      (dayId: string, a: Activity)    => void;
   onUpdateActivity:   (dayId: string, a: Activity)    => void;
@@ -456,7 +457,7 @@ interface DayCardProps {
 }
 
 export default function DayCard({
-  day, dayNumber, destination, isFirstOfDestination,
+  day, dayNumber, destination, isFirstOfDestination, isToday = false,
   onUpdateHotel,
   onAddActivity, onUpdateActivity, onDeleteActivity, onToggleActivityBooked,
   onAddRestaurant, onUpdateRestaurant, onDeleteRestaurant,
@@ -467,6 +468,8 @@ export default function DayCard({
   const [showAddTransport,  setShowAddTransport]  = useState(false);
   const [editingHotel,      setEditingHotel]      = useState(false);
   const [hotelForm, setHotelForm] = useState<Hotel | null>(null);
+  // Sur mobile, les sections sont ouvertes si c'est aujourd'hui, fermées sinon
+  const [expanded, setExpanded] = useState(isToday);
 
   const dateObj = new Date(day.date + 'T12:00:00');
   const dayTotal =
@@ -479,49 +482,56 @@ export default function DayCard({
   const totalBookable = day.activities.length + day.transports.length;
 
   return (
-    <div className="bg-white rounded-2xl border border-sand shadow-warm overflow-hidden animate-slide-up print-break">
-      {/* Day header */}
-      <div className="relative px-6 py-4 bg-card-gradient border-b border-sand">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
+    <div className={`bg-white rounded-2xl border shadow-warm overflow-hidden animate-slide-up print-break ${isToday ? 'border-coral-300 ring-2 ring-coral-100' : 'border-sand'}`}>
+      {/* Day header — cliquable sur mobile pour replier */}
+      <button
+        className="w-full text-left relative px-4 sm:px-6 py-3 sm:py-4 bg-card-gradient border-b border-sand sm:cursor-default"
+        onClick={() => setExpanded(e => !e)}
+      >
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-0.5">
               <span className="text-xs font-body font-semibold text-coral-400 uppercase tracking-widest">
                 Jour {dayNumber}
               </span>
-              {destination && (
+              {isToday && (
+                <span className="text-xs font-semibold px-2 py-0.5 bg-coral-500 text-white rounded-full">Aujourd'hui</span>
+              )}
+              {destination && !isToday && (
                 <>
                   <span className="text-gray-200">·</span>
                   <span className="text-xs text-gray-400">{destination.emoji} {destination.name}</span>
                 </>
               )}
             </div>
-            <h2 className="font-display text-2xl font-semibold text-dark capitalize">
+            <h2 className="font-display text-xl sm:text-2xl font-semibold text-dark capitalize truncate">
               {format(dateObj, 'EEEE d MMMM', { locale: fr })}
             </h2>
-            <p className="text-sm text-gray-500 font-body mt-0.5">{day.location}</p>
           </div>
 
-          <div className="text-right shrink-0 space-y-1">
-            {dayTotal > 0 && (
-              <div className="text-sm font-semibold text-gold-600">{dayTotal.toLocaleString('fr-FR')} €</div>
-            )}
-            {totalTransportTime > 0 && (
-              <div className="text-xs text-gray-400 flex items-center gap-1 justify-end">
-                <Clock size={10} />
-                {Math.floor(totalTransportTime / 60)}h{totalTransportTime % 60 > 0 ? `${totalTransportTime % 60}min` : ''} de trajet
-              </div>
-            )}
-            {totalBookable > 0 && (
-              <div className={`text-xs flex items-center gap-1 justify-end font-medium ${bookedCount === totalBookable ? 'text-green-500' : 'text-amber-500'}`}>
-                <CheckCircle2 size={10} />
-                {bookedCount}/{totalBookable} réservé{bookedCount > 1 ? 's' : ''}
-              </div>
-            )}
+          <div className="flex items-center gap-3 shrink-0">
+            <div className="text-right space-y-0.5">
+              {dayTotal > 0 && (
+                <div className="text-sm font-semibold text-gold-600">{dayTotal.toLocaleString('fr-FR')} €</div>
+              )}
+              {totalBookable > 0 && (
+                <div className={`text-xs flex items-center gap-1 justify-end font-medium ${bookedCount === totalBookable ? 'text-green-500' : 'text-amber-500'}`}>
+                  <CheckCircle2 size={10} />
+                  {bookedCount}/{totalBookable}
+                </div>
+              )}
+            </div>
+            {/* Chevron visible uniquement sur mobile */}
+            <div className="sm:hidden text-gray-400">
+              {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </div>
           </div>
         </div>
-      </div>
+      </button>
 
-      <div className="p-5 space-y-5">
+      {/* Contenu — toujours visible sur desktop, repliable sur mobile */}
+      <div className={`${expanded ? 'block' : 'hidden'} sm:block`}>
+      <div className="p-4 sm:p-5 space-y-5">
 
         {/* Hébergement */}
         {isFirstOfDestination && destination && (
@@ -532,9 +542,11 @@ export default function DayCard({
                 Hébergement
               </h3>
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold px-2 py-0.5 bg-gold-100 text-gold-700 rounded-full border border-gold-200">
-                  Check-in aujourd'hui
-                </span>
+                {isToday && (
+                  <span className="text-xs font-semibold px-2 py-0.5 bg-gold-100 text-gold-700 rounded-full border border-gold-200">
+                    Check-in aujourd'hui
+                  </span>
+                )}
                 <button
                   onClick={() => { setHotelForm(destination.hotel); setEditingHotel(true); }}
                   className="text-gray-400 hover:text-gold-500 transition-colors"
@@ -717,6 +729,7 @@ export default function DayCard({
             )}
           </div>
         </section>
+      </div>
       </div>
     </div>
   );

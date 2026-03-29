@@ -23,6 +23,44 @@ export type AlertStatus = 'pending' | 'booked' | 'confirmed';
 export type AlertPriority = 'high' | 'medium' | 'low';
 export type AlertCategory = 'hotel' | 'activity' | 'transport' | 'document' | 'other';
 
+export type BookingStatus = 'pending' | 'booked' | 'confirmed';
+
+export type TransferDifficulty = 'easy' | 'moderate' | 'challenging';
+
+export type TransferSegmentType =
+  | 'taxi'
+  | 'private_car'
+  | 'fastboat'
+  | 'ferry'
+  | 'walk'
+  | 'bus'
+  | 'motorbike'
+  | 'buffer';
+
+export interface TransferSegment {
+  id: string;
+  type: TransferSegmentType;
+  from: string;
+  to: string;
+  durationMinutes: number;
+  cost: number;
+  isBuffer: boolean;
+  bookingStatus: BookingStatus;
+  provider?: string;
+  notes?: string;
+}
+
+export interface Transfer {
+  id: string;
+  fromDestinationId: string;
+  toDestinationId: string;
+  date: string;
+  departureTime: string;
+  segments: TransferSegment[];
+  difficulty?: TransferDifficulty;
+  notes?: string;
+}
+
 export interface Hotel {
   id: string;
   name: string;
@@ -102,6 +140,21 @@ export interface Alert {
   relatedDayId?: string;
 }
 
+export interface Flight {
+  id: string;
+  direction: 'outbound' | 'return';
+  from: string;
+  to: string;
+  date: string;
+  departureTime: string;
+  arrivalTime: string;
+  airline: string;
+  flightNumber: string;
+  cost: number;
+  booked: boolean;
+  notes?: string;
+}
+
 export interface Trip {
   id: string;
   title: string;
@@ -111,6 +164,8 @@ export interface Trip {
   endDate: string;
   destinations: Destination[];
   days: DayPlan[];
+  flights: Flight[];
+  transfers: Transfer[];
   alerts: Alert[];
 }
 

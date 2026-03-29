@@ -1,70 +1,73 @@
 import { format, differenceInDays } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { Heart, MapPin, Calendar, LayoutList, PieChart, Bell, Printer } from 'lucide-react';
+import { Heart, MapPin, Calendar, LayoutList, PieChart, Bell, Printer, ArrowLeft, Route } from 'lucide-react';
 import { Trip } from '../types';
 
-type Tab = 'planning' | 'budget' | 'alerts';
+type Tab = 'planning' | 'budget' | 'logistics' | 'alerts';
 
 interface HeaderProps {
   trip: Trip;
   activeTab: Tab;
   onTabChange: (tab: Tab) => void;
+  logisticsCount?: number;
   selectedDestination: string | null;
   onDestinationChange: (id: string | null) => void;
+  onBack?: () => void;
 }
 
-export default function Header({ trip, activeTab, onTabChange, selectedDestination, onDestinationChange }: HeaderProps) {
+export default function Header({ trip, activeTab, onTabChange, selectedDestination, onDestinationChange, onBack, logisticsCount }: HeaderProps) {
   const start = new Date(trip.startDate);
   const end = new Date(trip.endDate);
   const totalDays = differenceInDays(end, start) + 1;
-
   const pendingAlerts = trip.alerts.filter(a => a.status === 'pending').length;
 
   return (
     <header className="relative overflow-hidden grain no-print">
-      {/* Hero background */}
       <div className="absolute inset-0 bg-hero-gradient" />
-      {/* Decorative circles */}
       <div className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-coral-700 opacity-20 blur-3xl" />
       <div className="absolute -bottom-10 -left-10 w-64 h-64 rounded-full bg-gold-700 opacity-15 blur-2xl" />
-      <div className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-forest opacity-30 blur-3xl" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Top bar */}
-        <div className="flex items-center justify-between pt-6 pb-2">
-          <div className="flex items-center gap-2 text-gold-300 text-sm font-body tracking-widest uppercase">
-            <Heart size={14} className="fill-current animate-float" />
-            <span>Lune de Miel</span>
+        <div className="flex items-center justify-between pt-4 pb-2">
+          <div className="flex items-center gap-3">
+            {onBack && (
+              <button onClick={onBack} className="flex items-center gap-1.5 text-white/70 hover:text-white transition-colors text-sm font-body py-2 pr-2">
+                <ArrowLeft size={16} />
+                <span className="hidden sm:inline">Mes voyages</span>
+              </button>
+            )}
+            {!onBack && (
+              <div className="flex items-center gap-2 text-gold-300 text-sm font-body tracking-widest uppercase">
+                <Heart size={14} className="fill-current" />
+                <span>Travel Planner</span>
+              </div>
+            )}
           </div>
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 text-white/50 hover:text-gold-300 transition-colors text-sm font-body"
-          >
+          <button onClick={() => window.print()} className="hidden sm:flex items-center gap-2 text-white/50 hover:text-gold-300 transition-colors text-sm font-body">
             <Printer size={14} />
-            <span className="hidden sm:inline">Imprimer</span>
+            <span>Imprimer</span>
           </button>
         </div>
 
-        {/* Main title */}
-        <div className="text-center py-8">
-          <h1 className="font-display text-5xl sm:text-7xl font-light text-white tracking-wide leading-none mb-2 animate-slide-up">
+        {/* Title — compact sur mobile, grand sur desktop */}
+        <div className="text-center py-4 sm:py-8">
+          <h1 className="font-display text-3xl sm:text-7xl font-light text-white tracking-wide leading-none mb-1 sm:mb-2">
             {trip.title}
           </h1>
-          <p className="font-display text-xl sm:text-2xl text-gold-300 italic font-light animate-slide-up stagger-1 mb-2">
-            {trip.subtitle}
-          </p>
-          <p className="font-body text-base text-white/60 flex items-center justify-center gap-2 animate-slide-up stagger-1 mb-6">
-            <Heart size={13} className="fill-current text-rose-300" />
-            {trip.couple}
-          </p>
+          {trip.couple && (
+            <p className="font-body text-sm sm:text-base text-white/60 flex items-center justify-center gap-1.5 mt-1 sm:mt-2">
+              <Heart size={11} className="fill-current text-rose-300" />
+              {trip.couple}
+            </p>
+          )}
 
-          {/* Stats row */}
-          <div className="flex flex-wrap items-center justify-center gap-6 text-white/70 text-sm font-body animate-fade-in stagger-2">
+          {/* Stats — cachées sur mobile pour gagner de la place */}
+          <div className="hidden sm:flex flex-wrap items-center justify-center gap-6 text-white/70 text-sm font-body mt-4">
             <div className="flex items-center gap-2">
               <Calendar size={14} className="text-gold-400" />
-              <span>
-                {format(start, 'd MMM', { locale: fr })} – {format(end, 'd MMM yyyy', { locale: fr })}
-              </span>
+              <span>{format(start, 'd MMM', { locale: fr })} – {format(end, 'd MMM yyyy', { locale: fr })}</span>
             </div>
             <div className="w-1 h-1 rounded-full bg-white/30" />
             <div className="flex items-center gap-2">
@@ -74,30 +77,39 @@ export default function Header({ trip, activeTab, onTabChange, selectedDestinati
             <div className="w-1 h-1 rounded-full bg-white/30" />
             <div className="flex items-center gap-2">
               <Heart size={14} className="text-rose-300 fill-current" />
-              <span>{totalDays} jours de bonheur</span>
+              <span>{totalDays} jours</span>
             </div>
+          </div>
+
+          {/* Stats inline sur mobile */}
+          <div className="flex sm:hidden items-center justify-center gap-3 text-white/50 text-xs font-body mt-2">
+            <span>{format(start, 'd MMM', { locale: fr })} – {format(end, 'd MMM yyyy', { locale: fr })}</span>
+            <span>·</span>
+            <span>{totalDays} jours</span>
+            <span>·</span>
+            <span>{trip.destinations.length} dest.</span>
           </div>
         </div>
 
-        {/* Destination pills */}
-        <div className="flex flex-wrap justify-center gap-2 pb-5 animate-fade-in stagger-3">
+        {/* Destination pills — scroll horizontal sur mobile */}
+        <div className="flex gap-2 pb-4 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:justify-center">
           <button
             onClick={() => onDestinationChange(null)}
-            className={`px-4 py-1.5 rounded-full text-xs font-body font-medium tracking-wide transition-all duration-200 ${
+            className={`px-3 py-1.5 rounded-full text-xs font-body font-medium tracking-wide transition-all duration-200 shrink-0 ${
               selectedDestination === null
-                ? 'bg-gold-500 text-white shadow-gold'
+                ? 'bg-gold-500 text-white'
                 : 'bg-white/10 text-white/70 hover:bg-white/20'
             }`}
           >
-            Tous les jours
+            Tous
           </button>
           {trip.destinations.map(dest => (
             <button
               key={dest.id}
               onClick={() => onDestinationChange(dest.id === selectedDestination ? null : dest.id)}
-              className={`px-4 py-1.5 rounded-full text-xs font-body font-medium tracking-wide transition-all duration-200 ${
+              className={`px-3 py-1.5 rounded-full text-xs font-body font-medium tracking-wide transition-all duration-200 shrink-0 ${
                 selectedDestination === dest.id
-                  ? 'bg-coral-500 text-white shadow-warm'
+                  ? 'bg-coral-500 text-white'
                   : 'bg-white/10 text-white/70 hover:bg-white/20'
               }`}
             >
@@ -106,12 +118,13 @@ export default function Header({ trip, activeTab, onTabChange, selectedDestinati
           ))}
         </div>
 
-        {/* Tab navigation */}
-        <nav className="flex border-t border-white/10 animate-fade-in stagger-4">
+        {/* Tab navigation — desktop uniquement (mobile = bottom nav) */}
+        <nav className="hidden sm:flex border-t border-white/10">
           {([
-            { id: 'planning' as Tab, label: 'Planning', icon: LayoutList, badge: 0 },
-            { id: 'budget'   as Tab, label: 'Budget',   icon: PieChart,   badge: 0 },
-            { id: 'alerts'   as Tab, label: 'Alertes',  icon: Bell,       badge: pendingAlerts },
+            { id: 'planning'   as Tab, label: 'Planning',   icon: LayoutList, badge: 0 },
+            { id: 'budget'     as Tab, label: 'Budget',     icon: PieChart,   badge: 0 },
+            { id: 'logistics'  as Tab, label: 'Logistique', icon: Route,      badge: logisticsCount ?? 0 },
+            { id: 'alerts'     as Tab, label: 'Alertes',    icon: Bell,       badge: pendingAlerts },
           ]).map(({ id, label, icon: Icon, badge }) => (
             <button
               key={id}
