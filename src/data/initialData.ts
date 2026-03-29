@@ -1,0 +1,434 @@
+import { Trip } from '../types';
+
+export const initialTrip: Trip = {
+  id: 'bali-honeymoon-2025',
+  title: 'Lune de Miel à Bali',
+  subtitle: 'Un paradis tropical, une histoire d\'amour',
+  couple: 'Ayoub & Safa',
+  startDate: '2025-08-21',
+  endDate: '2025-09-08',
+
+  destinations: [
+    {
+      id: 'ubud',
+      name: 'Ubud',
+      island: 'Bali',
+      startDate: '2025-08-21',
+      endDate: '2025-08-24',
+      emoji: '🌿',
+      description: 'Le cœur culturel de Bali — rizières en terrasses, temples et art balinais.',
+      hotel: {
+        id: 'komaneka',
+        name: 'Komaneka at Bisma',
+        address: 'Jl. Bisma, Ubud, Gianyar, Bali 80571',
+        costPerNight: 350,
+        nights: 3,
+        checkIn: '2025-08-21',
+        checkOut: '2025-08-24',
+        notes: 'Piscine à débordement surplombant la vallée du fleuve Wos. Demander une chambre vue vallée.',
+      },
+    },
+    {
+      id: 'nusa-penida',
+      name: 'Nusa Penida',
+      island: 'Nusa Penida',
+      startDate: '2025-08-25',
+      endDate: '2025-08-26',
+      emoji: '🏝️',
+      description: 'Falaises dramatiques, eaux turquoise et plages vierges.',
+      hotel: {
+        id: 'penida-view',
+        name: 'Penida View Cottage',
+        address: 'Jl. Raya Sampalan, Nusa Penida, Klungkung, Bali',
+        costPerNight: 120,
+        nights: 2,
+        checkIn: '2025-08-25',
+        checkOut: '2025-08-27',
+        notes: 'Chambre avec vue sur les falaises. Petit-déjeuner inclus.',
+      },
+    },
+    {
+      id: 'gili-islands',
+      name: 'Îles Gili',
+      island: 'Lombok',
+      startDate: '2025-08-27',
+      endDate: '2025-08-29',
+      emoji: '🐢',
+      description: 'La plus tranquille des Gilis — parfaite pour les lunes de miel.',
+      hotel: {
+        id: 'gili-meno-huts',
+        name: 'Gili Meno Huts',
+        address: 'Gili Meno, Pemenang, Lombok Utara',
+        costPerNight: 200,
+        nights: 3,
+        checkIn: '2025-08-27',
+        checkOut: '2025-08-30',
+        notes: 'Bungalow en bord de mer. Pas de véhicules motorisés sur l\'île.',
+      },
+    },
+    {
+      id: 'uluwatu',
+      name: 'Uluwatu',
+      island: 'Bali',
+      startDate: '2025-08-30',
+      endDate: '2025-09-02',
+      emoji: '🌊',
+      description: 'Luxe au sommet des falaises, surf légendaire et temples au coucher du soleil.',
+      hotel: {
+        id: 'bulgari-resort',
+        name: 'Bulgari Resort Bali',
+        address: 'Jl. Goa Lempeh, Banjar Dinas Kangin, Uluwatu, Bali',
+        costPerNight: 800,
+        nights: 4,
+        checkIn: '2025-08-30',
+        checkOut: '2025-09-03',
+        notes: 'Villas au sommet des falaises avec vue sur l\'océan Indien. Réserver la villa avec piscine privée.',
+      },
+    },
+    {
+      id: 'nusa-dua',
+      name: 'Nusa Dua',
+      island: 'Bali',
+      startDate: '2025-09-03',
+      endDate: '2025-09-08',
+      emoji: '🌅',
+      description: 'Détente absolue — plage privée, spa de classe mondiale et vagues douces.',
+      hotel: {
+        id: 'mulia-resort',
+        name: 'The Mulia Resort & Villas',
+        address: 'Jl. Raya Nusa Dua Selatan, BTDC, Nusa Dua, Bali',
+        costPerNight: 500,
+        nights: 5,
+        checkIn: '2025-09-03',
+        checkOut: '2025-09-08',
+        notes: 'Accès plage privée. Réserver le beach club pour le dîner au coucher du soleil.',
+      },
+    },
+  ],
+
+  days: [
+    // ── UBUD ────────────────────────────────────────────────────────────────
+    {
+      id: 'day-1',
+      date: '2025-08-21',
+      location: 'Ubud',
+      destination: 'ubud',
+      activities: [
+        { id: 'a1-1', name: 'Arrivée Ngurah Rai Airport', type: 'sightseeing', startTime: '14:00', endTime: '14:30', cost: 0, location: 'Ngurah Rai International Airport', booked: true, notes: 'Immigration et récupération des bagages' },
+        { id: 'a1-2', name: 'Check-in Komaneka at Bisma', type: 'relaxation', startTime: '17:00', endTime: '18:00', cost: 0, location: 'Komaneka at Bisma', booked: true },
+        { id: 'a1-3', name: 'Balade dans Ubud town', type: 'sightseeing', startTime: '18:30', endTime: '20:00', cost: 0, location: 'Centre d\'Ubud', booked: false, notes: 'Découverte du marché artisanal' },
+      ],
+      restaurants: [
+        { id: 'r1-1', name: 'Café Wayan', meal: 'dinner', estimatedCost: 40, cuisine: 'Balinaise', notes: 'Restaurant incontournable d\'Ubud — essayer le nasi campur' },
+      ],
+      transports: [
+        { id: 't1-1', type: 'car', from: 'Ngurah Rai Airport', to: 'Ubud', departureTime: '14:30', arrivalTime: '16:30', duration: 120, cost: 35, provider: 'Chauffeur privé', booked: false, notes: 'Réserver via l\'hôtel' },
+      ],
+    },
+    {
+      id: 'day-2',
+      date: '2025-08-22',
+      location: 'Ubud',
+      destination: 'ubud',
+      activities: [
+        { id: 'a2-1', name: 'Campuhan Ridge Walk', type: 'sightseeing', startTime: '07:00', endTime: '09:00', cost: 0, location: 'Campuhan Ridge, Ubud', booked: false, notes: 'Meilleure vue au lever du soleil — rizières dorées' },
+        { id: 'a2-2', name: 'Temple Tirta Empul', type: 'culture', startTime: '10:00', endTime: '12:00', cost: 15, location: 'Tirta Empul, Tampaksiring', booked: false, notes: 'Rituel de purification sacré. Apporter un sarong.' },
+        { id: 'a2-3', name: 'Rizières de Tegallalang', type: 'sightseeing', startTime: '13:30', endTime: '15:30', cost: 5, location: 'Tegallalang, Ubud', booked: false, notes: 'Rizières en terrasses les plus emblématiques de Bali' },
+        { id: 'a2-4', name: 'Soin Couple – Alila Ubud Spa', type: 'spa', startTime: '16:30', endTime: '18:30', cost: 180, location: 'Alila Ubud Hotel', booked: false, notes: 'Réserver à l\'avance ! Rituel spa couple de 2h' },
+      ],
+      restaurants: [
+        { id: 'r2-1', name: 'Kafe Ubud', meal: 'breakfast', estimatedCost: 20, cuisine: 'Santé / Biologique', notes: 'Famous smoothie bowls et petits-déjeuners sains' },
+        { id: 'r2-2', name: 'Locavore', meal: 'dinner', estimatedCost: 120, cuisine: 'Indonésien moderne', notes: 'Gastronomie — réserver plusieurs semaines à l\'avance !' },
+      ],
+      transports: [
+        { id: 't2-1', type: 'car', from: 'Hôtel Ubud', to: 'Tirta Empul & Tegallalang', departureTime: '09:30', arrivalTime: '10:00', duration: 30, cost: 20, provider: 'Chauffeur privé (journée)', booked: false },
+      ],
+    },
+    {
+      id: 'day-3',
+      date: '2025-08-23',
+      location: 'Ubud',
+      destination: 'ubud',
+      activities: [
+        { id: 'a3-1', name: 'Sacred Monkey Forest', type: 'sightseeing', startTime: '09:00', endTime: '11:00', cost: 20, location: 'Forêt des Singes Sacrée', booked: false },
+        { id: 'a3-2', name: 'Marché d\'art d\'Ubud', type: 'shopping', startTime: '11:30', endTime: '13:00', cost: 50, location: 'Ubud Market', booked: false, notes: 'Souvenirs, batik, sculpture sur bois' },
+        { id: 'a3-3', name: 'Cours de cuisine balinaise', type: 'culture', startTime: '15:00', endTime: '18:00', cost: 80, location: 'Casa Luna Cooking School', booked: false, notes: 'Apprendre le rendang et satay lilit' },
+      ],
+      restaurants: [
+        { id: 'r3-1', name: 'Clear Café', meal: 'lunch', estimatedCost: 25, cuisine: 'Végétarien / Bio' },
+        { id: 'r3-2', name: 'Mozaic Restaurant', meal: 'dinner', estimatedCost: 150, cuisine: 'Fusion Français-Indonésien', notes: 'Jardin romantique, primé — réserver !' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-4',
+      date: '2025-08-24',
+      location: 'Ubud → Nusa Penida',
+      destination: 'ubud',
+      activities: [
+        { id: 'a4-1', name: 'Matinée piscine & check-out', type: 'relaxation', startTime: '08:00', endTime: '10:30', cost: 0, booked: false },
+      ],
+      restaurants: [
+        { id: 'r4-1', name: 'Petit-déjeuner Komaneka', meal: 'breakfast', estimatedCost: 0, cuisine: 'International', notes: 'Inclus dans le séjour' },
+      ],
+      transports: [
+        { id: 't4-1', type: 'car', from: 'Ubud', to: 'Port de Sanur', departureTime: '10:30', arrivalTime: '11:30', duration: 60, cost: 25, provider: 'Chauffeur privé', booked: false },
+        { id: 't4-2', type: 'fastboat', from: 'Port de Sanur', to: 'Nusa Penida', departureTime: '12:00', arrivalTime: '12:45', duration: 45, cost: 30, provider: 'Rocky Fast Cruise', booked: false, notes: 'Réserver en avance. Départs toutes les heures.' },
+      ],
+    },
+
+    // ── NUSA PENIDA ─────────────────────────────────────────────────────────
+    {
+      id: 'day-5',
+      date: '2025-08-25',
+      location: 'Nusa Penida',
+      destination: 'nusa-penida',
+      activities: [
+        { id: 'a5-1', name: 'Kelingking Beach (falaise T-Rex)', type: 'sightseeing', startTime: '08:00', endTime: '10:30', cost: 5, location: 'Kelingking Beach', booked: false, notes: 'Vue iconique sur la falaise. Descente vers la plage très raide (optionnel).' },
+        { id: 'a5-2', name: 'Broken Beach & Angel Billabong', type: 'sightseeing', startTime: '11:00', endTime: '13:00', cost: 5, location: 'Ouest Nusa Penida', booked: false, notes: 'Piscine naturelle à débordement — nager seulement à marée basse' },
+        { id: 'a5-3', name: 'Snorkeling Crystal Bay', type: 'water', startTime: '14:30', endTime: '16:30', cost: 35, location: 'Crystal Bay, Nusa Penida', booked: false, notes: 'Saison du Mola Mola (poisson-lune) en août/sept !' },
+      ],
+      restaurants: [
+        { id: 'r5-1', name: 'Warung Dapur Ibu Oka', meal: 'lunch', estimatedCost: 15, cuisine: 'Balinaise' },
+        { id: 'r5-2', name: 'Penida View Restaurant', meal: 'dinner', estimatedCost: 30, cuisine: 'Indonésienne', notes: 'Vue sur les falaises au coucher du soleil' },
+      ],
+      transports: [
+        { id: 't5-1', type: 'car', from: 'Hôtel Penida View', to: 'Tour Ouest Nusa Penida', departureTime: '07:30', arrivalTime: '17:00', duration: 570, cost: 45, provider: 'Chauffeur local', booked: false, notes: 'Louer un scooter ou embaucher un chauffeur — routes accidentées' },
+      ],
+    },
+    {
+      id: 'day-6',
+      date: '2025-08-26',
+      location: 'Nusa Penida → Îles Gili',
+      destination: 'nusa-penida',
+      activities: [
+        { id: 'a6-1', name: 'Atuh Beach & Diamond Beach', type: 'sightseeing', startTime: '08:00', endTime: '11:00', cost: 5, location: 'Est Nusa Penida', booked: false, notes: 'Joyaux cachés côté est — falaises à couper le souffle' },
+      ],
+      restaurants: [
+        { id: 'r6-1', name: 'Petit-déjeuner hôtel', meal: 'breakfast', estimatedCost: 10, cuisine: 'Indonésien' },
+      ],
+      transports: [
+        { id: 't6-1', type: 'fastboat', from: 'Nusa Penida', to: 'Port de Padang Bai, Bali', departureTime: '12:00', arrivalTime: '13:00', duration: 60, cost: 30, provider: 'Eka Jaya Fast Boat', booked: false },
+        { id: 't6-2', type: 'ferry', from: 'Port de Padang Bai', to: 'Gili Trawangan', departureTime: '14:00', arrivalTime: '17:30', duration: 210, cost: 50, provider: 'Scoot Fast Cruises', booked: false, notes: 'Ferry direct Padang Bai → Gili Trawangan — réserver en ligne' },
+      ],
+    },
+
+    // ── GILI ISLANDS ────────────────────────────────────────────────────────
+    {
+      id: 'day-7',
+      date: '2025-08-27',
+      location: 'Îles Gili',
+      destination: 'gili-islands',
+      activities: [
+        { id: 'a7-1', name: 'Arrivée & check-in', type: 'relaxation', startTime: '17:30', endTime: '19:00', cost: 0, location: 'Gili Meno Huts', booked: true },
+        { id: 'a7-2', name: 'Coucher de soleil Gili Trawangan', type: 'sightseeing', startTime: '17:00', endTime: '18:30', cost: 0, location: 'Plage ouest de Gili Trawangan', booked: false, notes: 'Plus beau coucher de soleil des Gilis' },
+      ],
+      restaurants: [
+        { id: 'r7-1', name: 'Exile Bar & Grill', meal: 'dinner', estimatedCost: 45, cuisine: 'Fruits de mer / BBQ', notes: 'Poisson grillé frais sur la plage' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-8',
+      date: '2025-08-28',
+      location: 'Îles Gili',
+      destination: 'gili-islands',
+      activities: [
+        { id: 'a8-1', name: 'Tour de l\'île à vélo', type: 'adventure', startTime: '07:30', endTime: '10:00', cost: 10, location: 'Gili Meno', booked: false, notes: 'Tour complet en ~45 min. Aucun véhicule motorisé !' },
+        { id: 'a8-2', name: 'Snorkeling – Turtle Point', type: 'water', startTime: '10:30', endTime: '13:00', cost: 25, location: 'Gili Meno Turtle Point', booked: false, notes: 'Tortues marines quasi garanties !' },
+        { id: 'a8-3', name: 'Détente White Beach', type: 'relaxation', startTime: '14:00', endTime: '17:30', cost: 0, location: 'Plage Blanche, Gili Meno', booked: false },
+      ],
+      restaurants: [
+        { id: 'r8-1', name: 'Diana Café', meal: 'breakfast', estimatedCost: 15, cuisine: 'International' },
+        { id: 'r8-2', name: 'Rust Nurul', meal: 'dinner', estimatedCost: 35, cuisine: 'Fruits de mer', notes: 'Favori des locaux, poisson frais incroyable' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-9',
+      date: '2025-08-29',
+      location: 'Îles Gili → Uluwatu',
+      destination: 'gili-islands',
+      activities: [
+        { id: 'a9-1', name: 'Yoga matinal & baignade', type: 'relaxation', startTime: '07:00', endTime: '09:00', cost: 15, location: 'Plage Gili Meno', booked: false },
+      ],
+      restaurants: [
+        { id: 'r9-1', name: 'Petit-déjeuner hôtel', meal: 'breakfast', estimatedCost: 0, cuisine: 'International', notes: 'Inclus' },
+      ],
+      transports: [
+        { id: 't9-1', type: 'fastboat', from: 'Gili Trawangan', to: 'Port de Serangan, Bali', departureTime: '10:00', arrivalTime: '12:00', duration: 120, cost: 55, provider: 'Wahana Gili Ocean', booked: false },
+        { id: 't9-2', type: 'car', from: 'Port de Serangan', to: 'Bulgari Resort, Uluwatu', departureTime: '12:30', arrivalTime: '14:00', duration: 90, cost: 30, provider: 'Chauffeur privé', booked: false },
+      ],
+    },
+
+    // ── ULUWATU ─────────────────────────────────────────────────────────────
+    {
+      id: 'day-10',
+      date: '2025-08-30',
+      location: 'Uluwatu',
+      destination: 'uluwatu',
+      activities: [
+        { id: 'a10-1', name: 'Check-in Bulgari Resort', type: 'relaxation', startTime: '14:00', endTime: '16:00', cost: 0, booked: true },
+        { id: 'a10-2', name: 'Temple Uluwatu & Danse Kecak', type: 'culture', startTime: '17:00', endTime: '19:30', cost: 20, location: 'Pura Luhur Uluwatu', booked: false, notes: 'Danse Kecak au coucher du soleil — absolument magique ! Réserver à l\'avance.' },
+      ],
+      restaurants: [
+        { id: 'r10-1', name: 'Bulgari Il Ristorante', meal: 'dinner', estimatedCost: 200, cuisine: 'Méditerranéen / Gastronomique', notes: 'Dîner gastronomique au bord des falaises. Dress code.' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-11',
+      date: '2025-08-31',
+      location: 'Uluwatu',
+      destination: 'uluwatu',
+      activities: [
+        { id: 'a11-1', name: 'Padang Padang Beach', type: 'relaxation', startTime: '10:00', endTime: '13:00', cost: 5, location: 'Padang Padang Beach', booked: false, notes: 'Plage secrète aux eaux azurées' },
+        { id: 'a11-2', name: 'Karma Spa – Rituel Couple', type: 'spa', startTime: '14:00', endTime: '16:30', cost: 250, location: 'Karma Kandara Resort', booked: false, notes: 'Spa au bord des falaises — réserver impérativement !' },
+        { id: 'a11-3', name: 'Coucher de soleil Single Fin', type: 'sightseeing', startTime: '17:00', endTime: '19:00', cost: 10, location: 'Single Fin Bar, Uluwatu', booked: false, notes: 'Spot iconique face au break de surf' },
+      ],
+      restaurants: [
+        { id: 'r11-1', name: 'Naughty Nuri\'s Warung', meal: 'lunch', estimatedCost: 30, cuisine: 'BBQ Indonésien' },
+        { id: 'r11-2', name: 'Sundara Beach Club', meal: 'dinner', estimatedCost: 180, cuisine: 'Asiatique moderne', notes: 'Beach club Four Seasons — dîner élégant en bord de mer' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-12',
+      date: '2025-09-01',
+      location: 'Uluwatu',
+      destination: 'uluwatu',
+      activities: [
+        { id: 'a12-1', name: 'Bingin Beach', type: 'relaxation', startTime: '09:00', endTime: '12:00', cost: 0, location: 'Bingin Beach, Uluwatu', booked: false, notes: 'Plage en terrasses cachée — ça vaut les escaliers !' },
+        { id: 'a12-2', name: 'Bulgari Spa – Villa Privée', type: 'spa', startTime: '14:00', endTime: '17:00', cost: 300, location: 'Bulgari Resort', booked: false, notes: 'Soin spa en villa avec piscine privée' },
+      ],
+      restaurants: [
+        { id: 'r12-1', name: 'Om Burger', meal: 'lunch', estimatedCost: 20, cuisine: 'Burgers' },
+        { id: 'r12-2', name: 'Bulgari Il Bar', meal: 'dinner', estimatedCost: 100, cuisine: 'Méditerranéen' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-13',
+      date: '2025-09-02',
+      location: 'Uluwatu → Nusa Dua',
+      destination: 'uluwatu',
+      activities: [
+        { id: 'a13-1', name: 'Matinée piscine', type: 'relaxation', startTime: '08:00', endTime: '10:30', cost: 0, booked: false },
+      ],
+      restaurants: [
+        { id: 'r13-1', name: 'Petit-déjeuner Bulgari', meal: 'breakfast', estimatedCost: 0, cuisine: 'International', notes: 'Inclus' },
+      ],
+      transports: [
+        { id: 't13-1', type: 'car', from: 'Bulgari Resort, Uluwatu', to: 'Mulia Resort, Nusa Dua', departureTime: '11:00', arrivalTime: '12:00', duration: 60, cost: 25, provider: 'Chauffeur hôtel', booked: false },
+      ],
+    },
+
+    // ── NUSA DUA ────────────────────────────────────────────────────────────
+    {
+      id: 'day-14',
+      date: '2025-09-03',
+      location: 'Nusa Dua',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a14-1', name: 'Check-in & exploration du resort', type: 'relaxation', startTime: '12:00', endTime: '15:00', cost: 0, booked: true },
+        { id: 'a14-2', name: 'Après-midi plage privée', type: 'relaxation', startTime: '15:00', endTime: '18:00', cost: 0, location: 'Mulia Beach', booked: false },
+      ],
+      restaurants: [
+        { id: 'r14-1', name: 'Mulia Deli', meal: 'lunch', estimatedCost: 50, cuisine: 'International' },
+        { id: 'r14-2', name: 'The Sunset – Mulia Beach Club', meal: 'dinner', estimatedCost: 150, cuisine: 'Méditerranéen', notes: 'Dîner romantique sur la plage pour célébrer l\'arrivée' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-15',
+      date: '2025-09-04',
+      location: 'Nusa Dua',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a15-1', name: 'Mulia Spa – Journée Couple', type: 'spa', startTime: '10:00', endTime: '14:00', cost: 400, location: 'Mulia Spa', booked: false, notes: 'Journée ultime de détente. Réserver le rituel couple signature.' },
+        { id: 'a15-2', name: 'Sports nautiques (jet ski, parachute)', type: 'adventure', startTime: '15:00', endTime: '17:00', cost: 80, location: 'Mulia Beach Watersports', booked: false },
+      ],
+      restaurants: [
+        { id: 'r15-1', name: 'Soleil – Mulia Resort', meal: 'lunch', estimatedCost: 80, cuisine: 'Méditerranéen' },
+        { id: 'r15-2', name: 'Noble House', meal: 'dinner', estimatedCost: 120, cuisine: 'Chinois / Cantonais', notes: 'Restaurant chinois primé' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-16',
+      date: '2025-09-05',
+      location: 'Nusa Dua',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a16-1', name: 'Yoga matinal en bord de mer', type: 'relaxation', startTime: '07:00', endTime: '08:30', cost: 30, location: 'Mulia Beach', booked: false },
+        { id: 'a16-2', name: 'Waterblow – Trou souffleur naturel', type: 'sightseeing', startTime: '10:00', endTime: '11:30', cost: 0, location: 'Nusa Dua Waterblow', booked: false },
+        { id: 'a16-3', name: 'Beach club & piscine', type: 'relaxation', startTime: '13:00', endTime: '18:00', cost: 50, location: 'Mulia Beach Club', booked: false },
+      ],
+      restaurants: [
+        { id: 'r16-1', name: 'The Café – Mulia', meal: 'breakfast', estimatedCost: 40, cuisine: 'Buffet international' },
+        { id: 'r16-2', name: 'Casablanca', meal: 'dinner', estimatedCost: 100, cuisine: 'Marocain / Méditerranéen' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-17',
+      date: '2025-09-06',
+      location: 'Nusa Dua',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a17-1', name: 'Bali Safari – demi-journée', type: 'adventure', startTime: '09:00', endTime: '13:00', cost: 70, location: 'Bali Safari & Marine Park', booked: false },
+        { id: 'a17-2', name: 'Détente piscine & plage', type: 'relaxation', startTime: '14:00', endTime: '18:00', cost: 0, location: 'Mulia Resort', booked: false },
+      ],
+      restaurants: [
+        { id: 'r17-1', name: 'Arwana', meal: 'dinner', estimatedCost: 200, cuisine: 'Fruits de mer', notes: 'Dîner d\'adieu — meilleurs fruits de mer de Nusa Dua' },
+      ],
+      transports: [
+        { id: 't17-1', type: 'car', from: 'Mulia Resort', to: 'Bali Safari & Marine Park', departureTime: '08:30', arrivalTime: '09:00', duration: 30, cost: 30, provider: 'Taxi hôtel', booked: false },
+      ],
+    },
+    {
+      id: 'day-18',
+      date: '2025-09-07',
+      location: 'Nusa Dua',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a18-1', name: 'Dernière matinée plage', type: 'relaxation', startTime: '09:00', endTime: '12:00', cost: 0, location: 'Mulia Beach', booked: false },
+        { id: 'a18-2', name: 'Shopping Bali Collection', type: 'shopping', startTime: '14:00', endTime: '16:00', cost: 100, location: 'Bali Collection Mall, Nusa Dua', booked: false, notes: 'Souvenirs de dernière minute' },
+      ],
+      restaurants: [
+        { id: 'r18-1', name: 'Seasalt – Conrad Bali', meal: 'dinner', estimatedCost: 130, cuisine: 'Fruits de mer / Asiatique moderne', notes: 'Dîner romantique du dernier soir' },
+      ],
+      transports: [],
+    },
+    {
+      id: 'day-19',
+      date: '2025-09-08',
+      location: 'Nusa Dua → Départ',
+      destination: 'nusa-dua',
+      activities: [
+        { id: 'a19-1', name: 'Check-out & dernier petit-déjeuner', type: 'relaxation', startTime: '08:00', endTime: '10:00', cost: 0, booked: false },
+      ],
+      restaurants: [
+        { id: 'r19-1', name: 'Petit-déjeuner Mulia', meal: 'breakfast', estimatedCost: 0, cuisine: 'International', notes: 'Inclus' },
+      ],
+      transports: [
+        { id: 't19-1', type: 'car', from: 'Mulia Resort, Nusa Dua', to: 'Ngurah Rai Airport', departureTime: '11:00', arrivalTime: '11:30', duration: 30, cost: 20, provider: 'Chauffeur hôtel', booked: false, notes: 'Prévoir 3h avant le vol pour le départ international' },
+      ],
+    },
+  ],
+
+  alerts: [
+    { id: 'alert-1',  title: 'Réserver Locavore Restaurant (Ubud)',         description: 'Un des meilleurs restaurants de Bali — réserver 4 à 6 semaines à l\'avance',              dueDate: '2025-07-01', status: 'pending', priority: 'high',   category: 'activity',   relatedDayId: 'day-2' },
+    { id: 'alert-2',  title: 'Réserver Alila Ubud Spa',                     description: 'Soin couple — populaire, réserver 2 à 3 semaines à l\'avance',                              dueDate: '2025-08-01', status: 'pending', priority: 'high',   category: 'activity',   relatedDayId: 'day-2' },
+    { id: 'alert-3',  title: 'Réserver Fast Boat Sanur → Nusa Penida',      description: 'Rocky Fast Cruise ou Maruti Express — réserver pendant la haute saison',                   dueDate: '2025-08-01', status: 'pending', priority: 'high',   category: 'transport',  relatedDayId: 'day-4' },
+    { id: 'alert-4',  title: 'Réserver Karma Spa Uluwatu',                  description: 'Spa au bord des falaises chez Karma Kandara — places très limitées',                        dueDate: '2025-08-10', status: 'pending', priority: 'high',   category: 'activity',   relatedDayId: 'day-11' },
+    { id: 'alert-5',  title: 'Réserver Mulia Spa Package Journée',          description: 'Rituel couple signature — réserver dès la réservation de l\'hôtel',                         dueDate: '2025-08-15', status: 'pending', priority: 'medium', category: 'activity',   relatedDayId: 'day-15' },
+    { id: 'alert-6',  title: 'Confirmer Ferry Padang Bai → Gili Trawangan', description: 'Scoot Fast Cruises — réserver en ligne pour garantir les places',                           dueDate: '2025-08-01', status: 'pending', priority: 'high',   category: 'transport',  relatedDayId: 'day-6' },
+    { id: 'alert-7',  title: 'Billets Danse Kecak Uluwatu',                 description: 'Danse Kecak au coucher du soleil — acheter les billets en ligne à l\'avance',               dueDate: '2025-08-20', status: 'pending', priority: 'medium', category: 'activity',   relatedDayId: 'day-10' },
+    { id: 'alert-8',  title: 'Vérifier les conditions de visa',             description: 'Visa touristique indonésien — 30 jours gratuit à l\'arrivée pour la plupart des nationalités', dueDate: '2025-08-10', status: 'pending', priority: 'high',   category: 'document' },
+    { id: 'alert-9',  title: 'Assurance voyage',                            description: 'Souscrire une assurance voyage + médicale complète pour le séjour',                          dueDate: '2025-08-01', status: 'pending', priority: 'high',   category: 'document' },
+    { id: 'alert-10', title: 'Réserver Mozaic Restaurant (Ubud)',           description: 'Restaurant gastronomique — réserver 2 à 4 semaines à l\'avance',                            dueDate: '2025-08-01', status: 'pending', priority: 'medium', category: 'activity',   relatedDayId: 'day-3' },
+    { id: 'alert-11', title: 'Réserver Bulgari Resort (Uluwatu)',           description: 'Villa avec piscine privée — réserver très tôt, établissement très demandé',                  dueDate: '2025-06-01', status: 'pending', priority: 'high',   category: 'hotel',      relatedDayId: 'day-10' },
+    { id: 'alert-12', title: 'Vaccins & santé',                             description: 'Consulter un médecin : hépatite A/B, typhoïde, antipaludéen si nécessaire',                  dueDate: '2025-07-15', status: 'pending', priority: 'medium', category: 'document' },
+  ],
+};
